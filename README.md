@@ -1,3 +1,12 @@
+XMLJSONView
+========
+JSONXMLView is a Web extension compatible with Google Chrome that helps you view JSON in XML documents in the browser.
+
+Install XMLJSONView
+----------------
+* In Chrome, go to `chrome://extensions/` in the address bar, select "Load Unpacked", and choose the `xmljsonview/build` folder.
+
+
 JSONView
 ========
 

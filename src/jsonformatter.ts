@@ -9,7 +9,7 @@ export function jsonToHTML(json: any, uri: string) {
 }
 
 /** Convert a whole JSON value / JSONP response into an HTML body, without title and scripts */
-function jsonToHTMLBody(json: any) {
+export function jsonToHTMLBody(json: any) {
   return `<div id="json">${valueToHTML(json, '<root>')}</div>`;
 }
 
@@ -19,7 +19,7 @@ export function errorPage(error: Error, data: string, uri: string) {
 }
 
 /** Produce an error content for when parsing fails. */
-function errorPageBody(error: Error, data: string) {
+export function errorPageBody(error: Error, data: string) {
   // Escape unicode nulls
   data = data.replace("\u0000", "\uFFFD");
 

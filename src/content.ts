@@ -1,4 +1,4 @@
-import { errorPage, jsonToHTML } from './jsonformatter';
+import { errorPageBody, jsonToHTMLBody } from './jsonformatter';
 import { safeStringEncodeNums } from './safe-encode-numbers';
 import { installCollapseEventListeners } from './collapse';
 
@@ -11,17 +11,31 @@ chrome.runtime.sendMessage({}, (response: boolean) => {
     return;
   }
 
-  // At least in chrome, the JSON is wrapped in a pre tag.
-  const content = document.getElementsByTagName('pre')[0].innerText;
-  let outputDoc = '';
+  var head: HTMLElement = document.getElementsByTagName("head")[0];
+  var script = document.createElement("script");
+  script.setAttribute("src", chrome.runtime.getURL("viewer.js"));
+  head.appendChild(script);
+  head.insertAdjacentHTML(
+    "beforeend",
+    `<link rel=\"stylesheet\" href="${chrome.runtime.getURL("viewer.css")}" />`);
 
-  try {
-    const jsonObj = JSON.parse(safeStringEncodeNums(content));
-    outputDoc = jsonToHTML(jsonObj, document.URL);
-  } catch (e) {
-    outputDoc = errorPage(e, content, document.URL);
+  var content =  document.getElementsByClassName("collapsible-content");
+  for (let i = 0; i < content.length; i++)
+  {
+    let currentContent = content[i] as HTMLElement;
+    if (currentContent && currentContent.innerText.startsWith("<![CDATA[") && currentContent.innerText.endsWith("]]>"))
+    {
+      let outputDoc = '';
+      try {
+        var text = currentContent.innerText.replace(/\n*<!\[CDATA\[\n*/g, "").replace(/\n*]]>\n*/g, "");
+        const jsonObj = JSON.parse(safeStringEncodeNums(text));
+        outputDoc = jsonToHTMLBody(jsonObj);
+      } catch (e) {
+        outputDoc = errorPageBody(e, currentContent.innerText);
+      }
+    
+      currentContent.innerHTML = outputDoc;
+    } 
   }
-
-  document.documentElement.innerHTML = outputDoc;
   installCollapseEventListeners();
 });

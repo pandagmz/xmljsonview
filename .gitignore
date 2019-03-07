@@ -2,6 +2,5 @@
 *.zip
 .tern-port
 /ts-out
-/build
 /node_modules
 
