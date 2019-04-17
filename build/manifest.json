@@ -5,11 +5,9 @@
     "description": "JSON Viewer for XML",
     "author": "pandagmz",
     "icons": {
-        "32": "icon.png",
-        "48": "icon48.png",
-        "64": "icon64.png",
-        "128": "icon128.png",
-        "256": "icon256.png"
+        "16": "16px-Suitcase_icon_green.png",
+        "48": "48px-Suitcase_icon_green.png",
+        "128": "128px-Suitcase_icon_green.png"
     },
     "background": {
         "scripts": ["background.js"]

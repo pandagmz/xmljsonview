@@ -12,7 +12,7 @@ cp src/viewer.css build/viewer.css
 cp src/manifest.json build/manifest.json
 cp license.txt build/license.txt
 cp -r src/_locales build
-cp src/icon*.png build
+cp src/*icon_green.png build
 
 rm jsonview.zip
 pushd build
